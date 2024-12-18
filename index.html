@@ -6,91 +6,119 @@
     <title>Roue de la Chance</title>
     <style>
         body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #1e3c72, #2a5298);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+            color: white;
+        }
+        .container {
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: center;
-            height: 100vh;
-            margin: 0;
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
         }
         .wheel-container {
             position: relative;
-            width: 300px;
-            height: 300px;
+            width: 350px;
+            height: 350px;
         }
         .wheel {
             width: 100%;
             height: 100%;
             border-radius: 50%;
-            border: 5px solid #000;
+            background: conic-gradient(
+                #ff5733 0% 25%, 
+                #ffc300 25% 50%, 
+                #28a745 50% 75%, 
+                #007bff 75% 100%
+            );
+            border: 8px solid white;
+            box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.4);
             position: relative;
             transform: rotate(0deg);
             transition: transform 4s cubic-bezier(0.25, 0.1, 0.25, 1);
         }
         .wheel .segment {
             position: absolute;
-            width: 50%;
+            width: 100%;
             height: 50%;
-            background-color: #FFD700;
-            border: 1px solid #000;
-            transform-origin: 100% 100%;
             text-align: center;
-            line-height: 100px;
+            font-size: 18px;
+            font-weight: bold;
+            transform-origin: 50% 100%;
+            color: white;
         }
-        .wheel .segment:nth-child(2) { transform: rotate(90deg); background-color: #FF4500; }
-        .wheel .segment:nth-child(3) { transform: rotate(180deg); background-color: #1E90FF; }
-        .wheel .segment:nth-child(4) { transform: rotate(270deg); background-color: #32CD32; }
+        .segment:nth-child(1) { transform: rotate(45deg); }
+        .segment:nth-child(2) { transform: rotate(135deg); }
+        .segment:nth-child(3) { transform: rotate(225deg); }
+        .segment:nth-child(4) { transform: rotate(315deg); }
         .arrow {
             position: absolute;
-            top: -10px;
+            top: -20px;
             left: 50%;
             transform: translateX(-50%);
             width: 0;
             height: 0;
-            border-left: 10px solid transparent;
-            border-right: 10px solid transparent;
-            border-bottom: 20px solid #000;
+            border-left: 20px solid transparent;
+            border-right: 20px solid transparent;
+            border-bottom: 30px solid #fff;
             z-index: 10;
+            filter: drop-shadow(0 0 5px black);
         }
         #spin-button {
-            margin-top: 20px;
-            padding: 10px 20px;
-            font-size: 16px;
-            background-color: #000;
-            color: #fff;
+            margin-top: 30px;
+            padding: 15px 30px;
+            font-size: 20px;
+            font-weight: bold;
+            color: white;
+            background-color: #ff5733;
             border: none;
-            cursor: pointer;
             border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.3);
         }
-        #spin-button:active {
-            background-color: #555;
+        #spin-button:hover {
+            background-color: #e74c3c;
         }
     </style>
 </head>
 <body>
-    <div class="wheel-container">
-        <div class="arrow"></div>
-        <div class="wheel" id="wheel">
-            <div class="segment">Promo 1</div>
-            <div class="segment">Promo 2</div>
-            <div class="segment">Promo 3</div>
-            <div class="segment">Promo Formation</div>
+    <div class="container">
+        <div class="wheel-container">
+            <div class="arrow"></div>
+            <div class="wheel" id="wheel">
+                <div class="segment" style="transform: rotate(45deg);">Promo 1</div>
+                <div class="segment" style="transform: rotate(135deg);">Promo 2</div>
+                <div class="segment" style="transform: rotate(225deg);">Promo 3</div>
+                <div class="segment" style="transform: rotate(315deg);">Formation LoL</div>
+            </div>
         </div>
+        <button id="spin-button">Tourner la Roue</button>
     </div>
-    <button id="spin-button">Tourner la roue</button>
     <script>
         const wheel = document.getElementById("wheel");
         const spinButton = document.getElementById("spin-button");
 
         spinButton.addEventListener("click", () => {
-            // Truquage : La roue tombe toujours sur la dernière section (Promo Formation)
+            // Truquage : La roue tombe toujours sur "Formation LoL" (position à 315°)
             const rotations = 3; // Nombre de rotations complètes
-            const finalAngle = 270; // Position de la section désirée
+            const finalAngle = 315; // Position de la section désirée
             const spin = rotations * 360 + finalAngle;
 
             wheel.style.transform = `rotate(${spin}deg)`;
+
+            // Désactiver le bouton temporairement
+            spinButton.disabled = true;
+            setTimeout(() => {
+                alert("Félicitations ! Vous avez gagné : Formation League of Legends !");
+                spinButton.disabled = false;
+            }, 4000); // Attendre la fin de l'animation
         });
     </script>
 </body>
