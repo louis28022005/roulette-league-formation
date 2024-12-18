@@ -21,11 +21,14 @@
             display: flex;
             flex-direction: column;
             align-items: center;
+            text-align: center;
         }
         .wheel-container {
             position: relative;
-            width: 350px;
-            height: 350px;
+            width: 80vw;
+            height: 80vw;
+            max-width: 350px;
+            max-height: 350px;
         }
         .wheel {
             width: 100%;
@@ -114,6 +117,7 @@
             text-align: center;
             color: black;
             max-width: 300px;
+            width: 80%;
         }
         .popup-content h1 {
             font-size: 24px;
@@ -127,7 +131,6 @@
             max-width: 100%;
             border-radius: 5px;
             margin-top: 15px;
-            display: none;
         }
         .popup-content button {
             padding: 10px 20px;
@@ -139,9 +142,6 @@
             border-radius: 5px;
             cursor: pointer;
             margin-top: 10px;
-        }
-        .popup-content button.show-image {
-            background: #007bff;
         }
     </style>
 </head>
@@ -165,7 +165,6 @@
             <p>Félicitations ! Découvrez notre formation exclusive sur League of Legends.</p>
             <!-- Image hébergée sur GitHub -->
             <img id="promo-image" src="https://github.com/louis28022005/roulette-league-formation/blob/main/Sans%20titre.png?raw=true" alt="Promo">
-            <button class="show-image" onclick="showImage()">Voir l'image</button>
             <button onclick="closePopup()">Fermer</button>
         </div>
     </div>
@@ -173,7 +172,6 @@
         const wheel = document.getElementById("wheel");
         const spinButton = document.getElementById("spin-button");
         const popup = document.getElementById("popup");
-        const promoImage = document.getElementById("promo-image");
 
         spinButton.addEventListener("click", () => {
             const rotations = 3;
@@ -191,10 +189,6 @@
 
         function closePopup() {
             popup.classList.remove("show");
-        }
-
-        function showImage() {
-            promoImage.style.display = "block";
         }
     </script>
 </body>
