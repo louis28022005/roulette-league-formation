@@ -29,7 +29,6 @@
             height: 80vw;
             max-width: 350px;
             max-height: 350px;
-            animation: rotateIn 1s ease-out;
         }
         .wheel {
             width: 100%;
@@ -48,9 +47,6 @@
             transition: transform 4s cubic-bezier(0.25, 0.1, 0.25, 1);
             filter: drop-shadow(0 0 20px rgba(0, 0, 0, 0.7));
         }
-        .wheel:hover {
-            box-shadow: 0 0 40px rgba(255, 87, 51, 0.6);
-        }
         .wheel .segment {
             position: absolute;
             width: 100%;
@@ -58,20 +54,15 @@
             text-align: center;
             font-size: 18px;
             font-weight: bold;
-            transform-origin: 50% 100%;
+            transform-origin: 51% 107%; /* Éloigne légèrement les textes du centre */
             display: flex;
             justify-content: center;
             align-items: center;
-            transition: transform 0.3s ease;
         }
         .segment:nth-child(1) { transform: rotate(45deg); }
         .segment:nth-child(2) { transform: rotate(135deg); }
         .segment:nth-child(3) { transform: rotate(225deg); }
         .segment:nth-child(4) { transform: rotate(315deg); }
-        .segment:hover {
-            transform: scale(1.1);
-            cursor: pointer;
-        }
         .arrow {
             position: absolute;
             top: -40px;
@@ -82,7 +73,7 @@
             border-left: 20px solid transparent;
             border-right: 20px solid transparent;
             border-top: 40px solid #fff;
-            z-index: 1; /* Flèche sous la popup */
+            z-index: 1;
             filter: drop-shadow(0 0 5px black);
         }
         #spin-button {
@@ -107,7 +98,6 @@
             transform: translateY(0);
             box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
         }
-        /* Affiche promotionnelle */
         .popup {
             position: fixed;
             top: 0;
@@ -121,7 +111,7 @@
             visibility: hidden;
             opacity: 0;
             transition: visibility 0s, opacity 0.5s;
-            z-index: 10; /* Popup au-dessus de tout */
+            z-index: 10;
         }
         .popup.show {
             visibility: visible;
@@ -135,7 +125,6 @@
             color: black;
             max-width: 300px;
             width: 80%;
-            animation: popupIn 0.5s ease-out;
         }
         .popup-content h1 {
             font-size: 28px;
@@ -161,34 +150,10 @@
             border-radius: 10px;
             cursor: pointer;
             margin-top: 15px;
-            transition: all 0.3s ease;
         }
         .popup-content button:hover {
             background-color: #218838;
         }
-
-        /* Animations */
-        @keyframes rotateIn {
-            0% {
-                transform: rotate(0deg);
-                opacity: 0;
-            }
-            100% {
-                transform: rotate(360deg);
-                opacity: 1;
-            }
-        }
-        @keyframes popupIn {
-            0% {
-                transform: scale(0.8);
-                opacity: 0;
-            }
-            100% {
-                transform: scale(1);
-                opacity: 1;
-            }
-        }
-
     </style>
 </head>
 <body>
@@ -196,20 +161,18 @@
         <div class="wheel-container">
             <div class="arrow"></div>
             <div class="wheel" id="wheel">
-                <div class="segment" style="transform: rotate(45deg);">Formation LoL1</div>
-                <div class="segment" style="transform: rotate(135deg);">Admissibilité Supaero</div>
-                <div class="segment" style="transform: rotate(225deg);">Iphone 16 por</div>
-                <div class="segment" style="transform: rotate(315deg);">Voyage Coree</div>
+                <div class="segment">Formation LoL</div>
+                <div class="segment">Admissibilité Supaero</div>
+                <div class="segment">iPhone 16 Pro</div>
+                <div class="segment">Voyage Corée</div>
             </div>
         </div>
         <button id="spin-button">Tourner la Roue</button>
     </div>
-    <!-- Popup -->
     <div class="popup" id="popup">
         <div class="popup-content">
             <h1>🎉 Gagné !</h1>
             <p>Félicitations ! Découvrez notre formation exclusive sur League of Legends.</p>
-            <!-- Image hébergée sur GitHub -->
             <img id="promo-image" src="https://github.com/louis28022005/roulette-league-formation/blob/main/Sans%20titre.png?raw=true" alt="Promo">
             <button onclick="closePopup()">Fermer</button>
         </div>
