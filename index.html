@@ -51,7 +51,9 @@
             font-size: 18px;
             font-weight: bold;
             transform-origin: 50% 100%;
-            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
         .segment:nth-child(1) { transform: rotate(45deg); }
         .segment:nth-child(2) { transform: rotate(135deg); }
@@ -59,14 +61,14 @@
         .segment:nth-child(4) { transform: rotate(315deg); }
         .arrow {
             position: absolute;
-            top: -20px;
+            top: -40px;
             left: 50%;
-            transform: translateX(-50%);
+            transform: translateX(-50%) rotate(0deg);
             width: 0;
             height: 0;
             border-left: 20px solid transparent;
             border-right: 20px solid transparent;
-            border-bottom: 30px solid #fff;
+            border-top: 40px solid #fff;
             z-index: 10;
             filter: drop-shadow(0 0 5px black);
         }
@@ -86,6 +88,61 @@
         #spin-button:hover {
             background-color: #e74c3c;
         }
+        /* Affiche promotionnelle */
+        .popup {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            visibility: hidden;
+            opacity: 0;
+            transition: visibility 0s, opacity 0.5s;
+        }
+        .popup.show {
+            visibility: visible;
+            opacity: 1;
+        }
+        .popup-content {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            color: black;
+            max-width: 300px;
+        }
+        .popup-content h1 {
+            font-size: 24px;
+            margin-bottom: 15px;
+        }
+        .popup-content p {
+            font-size: 16px;
+            margin-bottom: 20px;
+        }
+        .popup-content img {
+            max-width: 100%;
+            border-radius: 5px;
+            margin-top: 15px;
+            display: none;
+        }
+        .popup-content button {
+            padding: 10px 20px;
+            font-size: 16px;
+            font-weight: bold;
+            color: white;
+            background: #28a745;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+        .popup-content button.show-image {
+            background: #007bff;
+        }
     </style>
 </head>
 <body>
@@ -93,33 +150,52 @@
         <div class="wheel-container">
             <div class="arrow"></div>
             <div class="wheel" id="wheel">
-                <div class="segment" style="transform: rotate(45deg);">PFormation LoL</div>
+                <div class="segment" style="transform: rotate(45deg);">Promo 1</div>
                 <div class="segment" style="transform: rotate(135deg);">Promo 2</div>
                 <div class="segment" style="transform: rotate(225deg);">Promo 3</div>
-                <div class="segment" style="transform: rotate(315deg);">Iphone 16 pro</div>
+                <div class="segment" style="transform: rotate(315deg);">Formation LoL</div>
             </div>
         </div>
         <button id="spin-button">Tourner la Roue</button>
     </div>
+    <!-- Popup -->
+    <div class="popup" id="popup">
+        <div class="popup-content">
+            <h1>🎉 Gagné !</h1>
+            <p>Félicitations ! Découvrez notre formation exclusive sur League of Legends.</p>
+            <!-- Image hébergée sur GitHub -->
+            <img id="promo-image" src="https://raw.githubusercontent.com/username/repository/branch/images/votre-image.jpg" alt="Promo">
+            <button class="show-image" onclick="showImage()">Voir l'image</button>
+            <button onclick="closePopup()">Fermer</button>
+        </div>
+    </div>
     <script>
         const wheel = document.getElementById("wheel");
         const spinButton = document.getElementById("spin-button");
+        const popup = document.getElementById("popup");
+        const promoImage = document.getElementById("promo-image");
 
         spinButton.addEventListener("click", () => {
-            // Truquage : La roue tombe toujours sur "Formation LoL" (position à 315°)
-            const rotations = 3; // Nombre de rotations complètes
-            const finalAngle = 315; // Position de la section désirée
+            const rotations = 3;
+            const finalAngle = 315;
             const spin = rotations * 360 + finalAngle;
 
             wheel.style.transform = `rotate(${spin}deg)`;
 
-            // Désactiver le bouton temporairement
             spinButton.disabled = true;
             setTimeout(() => {
-                alert("Félicitations ! Vous avez gagné : Formation League of Legends !");
+                popup.classList.add("show");
                 spinButton.disabled = false;
-            }, 4000); // Attendre la fin de l'animation
+            }, 4000);
         });
+
+        function closePopup() {
+            popup.classList.remove("show");
+        }
+
+        function showImage() {
+            promoImage.style.display = "block";
+        }
     </script>
 </body>
 </html>
