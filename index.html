@@ -8,7 +8,7 @@
         body {
             margin: 0;
             padding: 0;
-            font-family: Arial, sans-serif;
+            font-family: 'Arial', sans-serif;
             background: linear-gradient(135deg, #1e3c72, #2a5298);
             display: flex;
             justify-content: center;
@@ -29,6 +29,7 @@
             height: 80vw;
             max-width: 350px;
             max-height: 350px;
+            animation: rotateIn 1s ease-out;
         }
         .wheel {
             width: 100%;
@@ -41,10 +42,14 @@
                 #007bff 75% 100%
             );
             border: 8px solid white;
-            box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.4);
+            box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.6);
             position: relative;
             transform: rotate(0deg);
             transition: transform 4s cubic-bezier(0.25, 0.1, 0.25, 1);
+            filter: drop-shadow(0 0 20px rgba(0, 0, 0, 0.7));
+        }
+        .wheel:hover {
+            box-shadow: 0 0 40px rgba(255, 87, 51, 0.6);
         }
         .wheel .segment {
             position: absolute;
@@ -57,11 +62,16 @@
             display: flex;
             justify-content: center;
             align-items: center;
+            transition: transform 0.3s ease;
         }
         .segment:nth-child(1) { transform: rotate(45deg); }
         .segment:nth-child(2) { transform: rotate(135deg); }
         .segment:nth-child(3) { transform: rotate(225deg); }
         .segment:nth-child(4) { transform: rotate(315deg); }
+        .segment:hover {
+            transform: scale(1.1);
+            cursor: pointer;
+        }
         .arrow {
             position: absolute;
             top: -40px;
@@ -72,7 +82,7 @@
             border-left: 20px solid transparent;
             border-right: 20px solid transparent;
             border-top: 40px solid #fff;
-            z-index: 10;
+            z-index: 1; /* Flèche sous la popup */
             filter: drop-shadow(0 0 5px black);
         }
         #spin-button {
@@ -83,7 +93,7 @@
             color: white;
             background-color: #ff5733;
             border: none;
-            border-radius: 10px;
+            border-radius: 12px;
             cursor: pointer;
             transition: all 0.3s ease;
             box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
@@ -91,7 +101,7 @@
         #spin-button:hover {
             background-color: #e74c3c;
             transform: translateY(-3px);
-            box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.4);
+            box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.4);
         }
         #spin-button:active {
             transform: translateY(0);
@@ -111,32 +121,35 @@
             visibility: hidden;
             opacity: 0;
             transition: visibility 0s, opacity 0.5s;
+            z-index: 10; /* Popup au-dessus de tout */
         }
         .popup.show {
             visibility: visible;
             opacity: 1;
         }
         .popup-content {
-            background: white;
-            padding: 20px;
-            border-radius: 10px;
+            background: #fff;
+            padding: 30px;
+            border-radius: 15px;
             text-align: center;
             color: black;
             max-width: 300px;
             width: 80%;
+            animation: popupIn 0.5s ease-out;
         }
         .popup-content h1 {
-            font-size: 24px;
-            margin-bottom: 15px;
+            font-size: 28px;
+            margin-bottom: 20px;
+            color: #2ecc71;
         }
         .popup-content p {
-            font-size: 16px;
+            font-size: 18px;
             margin-bottom: 20px;
         }
         .popup-content img {
             max-width: 100%;
-            border-radius: 5px;
-            margin-top: 15px;
+            border-radius: 10px;
+            margin-top: 20px;
         }
         .popup-content button {
             padding: 12px 30px;
@@ -145,14 +158,37 @@
             color: white;
             background: #28a745;
             border: none;
-            border-radius: 8px;
+            border-radius: 10px;
             cursor: pointer;
-            margin-top: 10px;
+            margin-top: 15px;
             transition: all 0.3s ease;
         }
         .popup-content button:hover {
             background-color: #218838;
         }
+
+        /* Animations */
+        @keyframes rotateIn {
+            0% {
+                transform: rotate(0deg);
+                opacity: 0;
+            }
+            100% {
+                transform: rotate(360deg);
+                opacity: 1;
+            }
+        }
+        @keyframes popupIn {
+            0% {
+                transform: scale(0.8);
+                opacity: 0;
+            }
+            100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
     </style>
 </head>
 <body>
